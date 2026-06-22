@@ -1,0 +1,11 @@
+cluster:
+  max_workers: 24
+  heartbeat_interval: 10
+
+store:
+  type: "postgres"
+  connection_string: "postgres://user:pass@localhost:5432"
+
+autoscaling:
+  min_pods: 2
+  max_pods: 24
