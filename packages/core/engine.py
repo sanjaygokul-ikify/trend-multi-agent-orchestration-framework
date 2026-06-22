@@ -14,33 +14,49 @@ class Engine:
         self.logger = logging.getLogger(__name__)
 
     def start(self) -> None:
-        self.logger.info('Starting engine')
-        self.task_scheduler.start()
-        self.worker_pod.start()
-        self.event_bus.start()
-        self.persistent_store.start()
-        self.analytics_db.start()
+        try:
+            self.logger.info('Starting engine')
+            self.task_scheduler.start()
+            self.worker_pod.start()
+            self.event_bus.start()
+            self.persistent_store.start()
+            self.analytics_db.start()
+        except Exception as e:
+            self.logger.error(f'Error starting engine: {e}')
+            raise EngineException('Failed to start engine')
 
     def stop(self) -> None:
-        self.logger.info('Stopping engine')
-        self.task_scheduler.stop()
-        self.worker_pod.stop()
-        self.event_bus.stop()
-        self.persistent_store.stop()
-        self.analytics_db.stop()
+        try:
+            self.logger.info('Stopping engine')
+            self.task_scheduler.stop()
+            self.worker_pod.stop()
+            self.event_bus.stop()
+            self.persistent_store.stop()
+            self.analytics_db.stop()
+        except Exception as e:
+            self.logger.error(f'Error stopping engine: {e}')
+            raise EngineException('Failed to stop engine')
 
     def execute(self, task: Dict) -> None:
-        self.logger.info('Executing task')
-        self.task_scheduler.schedule(task)
-        self.worker_pod.allocate(task)
-        self.event_bus.publish(task)
-        self.persistent_store.store(task)
-        self.analytics_db.query(task)
+        try:
+            self.logger.info('Executing task')
+            self.task_scheduler.schedule(task)
+            self.worker_pod.allocate(task)
+            self.event_bus.publish(task)
+            self.persistent_store.store(task)
+            self.analytics_db.query(task)
+        except Exception as e:
+            self.logger.error(f'Error executing task: {e}')
+            raise EngineException('Failed to execute task')
 
     def orchestrate(self, tasks: List[Dict]) -> None:
-        self.logger.info('Orchestrating tasks')
-        for task in tasks:
-            self.execute(task)
+        try:
+            self.logger.info('Orchestrating tasks')
+            for task in tasks:
+                self.execute(task)
+        except Exception as e:
+            self.logger.error(f'Error orchestrating tasks: {e}')
+            raise EngineException('Failed to orchestrate tasks')
 
 class CoreException(Exception):
     pass
