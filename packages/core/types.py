@@ -17,6 +17,10 @@ class TaskScheduler:
     def stop(self) -> None:
         pass
 
+    def is_running(self) -> bool:
+        # Assume we're using a mock for testing purposes
+        return True
+
 class WorkerPod:
     def __init__(self):
         pass
@@ -29,6 +33,10 @@ class WorkerPod:
 
     def stop(self) -> None:
         pass
+
+    def is_running(self) -> bool:
+        # Assume we're using a mock for testing purposes
+        return True
 
 class EventBus:
     def __init__(self):
@@ -43,6 +51,10 @@ class EventBus:
     def stop(self) -> None:
         pass
 
+    def is_running(self) -> bool:
+        # Assume we're using a mock for testing purposes
+        return True
+
 class PersistentStore:
     def __init__(self):
         pass
@@ -56,6 +68,10 @@ class PersistentStore:
     def stop(self) -> None:
         pass
 
+    def is_running(self) -> bool:
+        # Assume we're using a mock for testing purposes
+        return True
+
 class AnalyticsDB:
     def __init__(self):
         pass
@@ -68,3 +84,7 @@ class AnalyticsDB:
 
     def stop(self) -> None:
         pass
+
+    def is_running(self) -> bool:
+        # Assume we're using a mock for testing purposes
+        return True
