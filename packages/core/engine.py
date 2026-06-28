@@ -58,6 +58,9 @@ class Engine:
             self.logger.error(f'Error orchestrating tasks: {e}')
             raise EngineException('Failed to orchestrate tasks')
 
+    def is_running(self) -> bool:
+        return all([component.is_running() for component in [self.task_scheduler, self.worker_pod, self.event_bus, self.persistent_store, self.analytics_db]])
+
 class CoreException(Exception):
     pass
 
@@ -74,6 +77,7 @@ try:
         AnalyticsDB()
     )
     engine.start()
+    print(engine.is_running())
     engine.orchestrate([{'task_id': 1, 'task_name': 'task_1'}, {'task_id': 2, 'task_name': 'task_2'}])
 except EngineException as e:
     logging.error(f'Engine exception: {e}')
