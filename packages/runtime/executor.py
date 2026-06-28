@@ -42,6 +42,9 @@ class Executor:
         for task in tasks:
             self.execute(task)
 
+    def is_running(self) -> bool:
+        return all([component.is_running() for component in [self.task_scheduler, self.worker_pod, self.event_bus, self.persistent_store, self.analytics_db]])
+
     def runtime_config(self) -> Dict:
         return {'runtime_config': 'runtime_config'}
 
@@ -55,6 +58,7 @@ try:
         AnalyticsDB()
     )
     executor.start()
+    print(executor.is_running())
     executor.orchestrate([{'task_id': 1, 'task_name': 'task_1'}, {'task_id': 2, 'task_name': 'task_2'}])
 except EngineException as e:
     logging.error(f'Engine exception: {e}')
